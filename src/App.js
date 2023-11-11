@@ -26,6 +26,31 @@ import "./App.css";
 function App() {
   const [open, setOpen] = useState(false);
 
+  /////////////////   Set Dark Theme   //////////////////
+
+  const [themeMode, setThemeMode] = useState(() => {
+    return getFromLocalStorage();
+  });
+  useEffect(() => {
+    if (themeMode === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("mode", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("mode", "light");
+    }
+  }, [themeMode]);
+
+  const handleThemeSwitch = () => {
+    setThemeMode(themeMode === "dark" ? "light" : "dark");
+  };
+
+  function getFromLocalStorage() {
+    return localStorage.mode;
+  }
+
+  ////////////////  End  //////////////////
+
   const [theme, setTheme] = useState(0);
   const handleClick = () => {
     localStorage.setItem("theme", JSON.stringify(!theme));
@@ -38,7 +63,7 @@ function App() {
     }
   }, []);
   return (
-    <div style={{ fontFamily: "Poppins" }} className="leading-[33px]">
+    <div style={{ fontFamily: "Poppins" }} className="leading-[33px] ">
       {/* navbar  */}
 
       <div className="px-[20px] md:px-[50px] lg:px-[90px] mt-12 md:mb-36">
@@ -61,7 +86,10 @@ function App() {
                     className={`toggle-slide ${
                       theme ? "bg-slate-400" : "bg-gray-400"
                     }`}
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick();
+                      handleThemeSwitch();
+                    }}
                   >
                     <div className={`switch ${theme ? "slide " : ""}`}>
                       <BsSunFill
@@ -111,7 +139,7 @@ function App() {
                   <li className="px-5 lg:px-[60px] text-lg lg:text-xl  font-regular leading-[39px] text-white">
                     <a href="#">Login</a>
                   </li>
-                  <li className="px-5 lg:px-[60px] text-lg lg:text-xl  font-regular leading-[39px] w-[135px]h-[40px]  lg:h-[50px] bg-black rounded-xl text-white  flex justify-center items-center text-white">
+                  <li className="px-5 lg:px-[60px] text-lg lg:text-xl  font-regular leading-[39px] w-[135px]h-[40px]  lg:h-[50px] bg-black rounded-xl  flex justify-center items-center text-white">
                     <a href="#">Register</a>
                   </li>
                 </ul>
@@ -141,7 +169,7 @@ function App() {
                 further! Our genuine social media services can help you reach
                 new heights.
               </p>
-              <button class="  bg-[#051A29] w-1/2 md:w-2/4 lg:w-[190px] lg:h-[55px] rounded-2xl py-3 font-bold text-white">
+              <button className="  bg-[#051A29] w-1/2 md:w-2/4 lg:w-[190px] lg:h-[55px] rounded-2xl py-3 font-bold text-white">
                 Get started
               </button>
             </div>
@@ -220,7 +248,7 @@ function App() {
                         <IoIosArrowDown />
                       </div>
                       <div className="mb-10 rounded-2xl">
-                        <button class="  bg-gradient-to-r bg-gradient-to-r from-purple-500 to-pink-500 text-white w-full rounded-2xl pt-2 lg:pt-3 pb-2 lg:pb-3">
+                        <button className="  bg-gradient-to-r from-purple-500 to-pink-500 text-white w-full rounded-2xl pt-2 lg:pt-3 pb-2 lg:pb-3">
                           Continue
                         </button>
                       </div>
@@ -244,13 +272,13 @@ function App() {
           </div>
         </div>
         <div className="h-auto md:h-2/3 md:pb-14  bg-left-bottom absolute top-1/4 px-0">
-          <img src={ShadowBg} alt="" />
+          <img src={ShadowBg} alt="" className="dark:hidden" />
         </div>
       </div>
 
       {/* title  */}
       <div className="relative px-[20px] md:px-[50px] lg:px-[90px]">
-        <div className="mb-[110px] mt-[700px] md:mt-0  lg:mt-96 lg:mt-0">
+        <div className="mb-[110px] mt-[700px] md:mt-0  lg:mt-96 ">
           <h1 className="text-xl md:ext-3xl lg:text-[55px] font-bold  text-center mb-4">
             The #1 Plattform for Social Media Growth
           </h1>
@@ -349,7 +377,7 @@ function App() {
         </div>
 
         <div className="h-auto md:h-2/3 md:pb-14  bg-left-bottom absolute top-1/4 px-0">
-          <img src={ShadowBg} alt="" />
+          <img src={ShadowBg} alt="" className="dark:hidden" />
         </div>
       </div>
 
@@ -396,7 +424,7 @@ function App() {
               boosting your presence.
             </p>
           </div>
-          <div className="shadow shadow-gray-200 rounded-lg p-4 mb-4 text-center md:h-[400px] lg:h-[300px] mb-5 md:mb-0">
+          <div className="shadow shadow-gray-200 rounded-lg p-4 mb-4 text-center md:h-[400px] lg:h-[300px]  md:mb-0">
             <div className="flex justify-center -top-12 relative">
               <h1 className="text-xl lg:text-[30px] text-white w-12 h-12  lg:w-20 lg:h-20 rounded-lg flex justify-center items-center font-medium text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-20">
                 3
